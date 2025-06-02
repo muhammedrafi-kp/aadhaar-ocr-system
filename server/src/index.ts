@@ -21,6 +21,10 @@ app.use(express.json());
 
 app.use("/api/v1/aadhaar", ocrRoutes);
 
+app.use("/api/v1/test", (req, res) => {
+    res.json({message: "Hello World"});
+});
+
 console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
 app.listen(process.env.PORT,()=>{
