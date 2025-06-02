@@ -60,7 +60,7 @@ const AadhaarUploadForm: React.FC<AadhaarUploadFormProps> = ({ onOcrComplete }) 
       formData.append('front', aadhaarImages.front);
       formData.append('back', aadhaarImages.back);
 
-      const response = await axios.post('http://localhost:3000/api/v1/aadhaar/extract', formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/aadhaar/extract`, formData);
 
       console.log("response:",response);
 
