@@ -1,0 +1,24 @@
+# Node modules
+/node_modules/
+
+# Service account key
+/src/config/service-account-key.json
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+
+# Build output
+/dist
+/build
+
+# Dependency directories (for server-side tools)
+jspm_packages/
+
+
+# npm-debug logs
+npm-debug.log*
+
