@@ -1,8 +1,18 @@
 import vision from "@google-cloud/vision";
 
-const client = new vision.ImageAnnotatorClient({
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-});
+// const client = new vision.ImageAnnotatorClient({
+//     keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+// });
+
+// const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || '{}');
+
+// const client = new vision.ImageAnnotatorClient({
+//   credentials,
+//   projectId: credentials.project_id,
+// });
+
+const client = new vision.ImageAnnotatorClient();
+
 
 interface CustomError extends Error {
     status?: number;
