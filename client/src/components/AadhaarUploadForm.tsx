@@ -35,7 +35,7 @@ const AadhaarUploadForm: React.FC<AadhaarUploadFormProps> = ({ onOcrComplete }) 
       ...prev,
       [side]: file
     }));
-    
+
     // Reset status when new images are selected
     setUploadStatus('idle');
     setErrorMessage('');
@@ -43,18 +43,18 @@ const AadhaarUploadForm: React.FC<AadhaarUploadFormProps> = ({ onOcrComplete }) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate images
     if (!aadhaarImages.front || !aadhaarImages.back) {
-        console.log("aadhaarImages:",aadhaarImages.front,aadhaarImages.back);
+      console.log("aadhaarImages:", aadhaarImages.front, aadhaarImages.back);
       setUploadStatus('error');
       setErrorMessage('Please upload both front and back images of your Aadhaar card.');
       return;
     }
 
-    console.log("aadhaarImages:",aadhaarImages);
+    console.log("aadhaarImages:", aadhaarImages);
     setIsUploading(true);
-    
+
     try {
       const formData = new FormData();
       formData.append('front', aadhaarImages.front);
@@ -62,27 +62,31 @@ const AadhaarUploadForm: React.FC<AadhaarUploadFormProps> = ({ onOcrComplete }) 
 
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/aadhaar/extract`, formData);
 
-      console.log("response:",response);
+      console.log("response:", response);
 
-      if(response.data.success){
+      if (response.data.success) {
         onOcrComplete(response.data.aadhaarData);
-      }else{
+      } else {
         setUploadStatus('error');
         setErrorMessage(response.data.message);
-    }
-      
+      }
+
       // onOcrComplete(mockOcrResult);
       setUploadStatus('success');
-    } catch (error:any) {
+    } catch (error: any) {
       setUploadStatus('error');
-      setErrorMessage(`${error.response.data.message}, Please upload a clearer front and back image for better accuracy.`);
+      if (error.response.data.status === 404 || error.response.data.status === 500) {
+        setErrorMessage('Something went wrong. Please try again.');
+      } else {
+        setErrorMessage(`${error.response.data.message}, Please upload a clearer front and back image for better accuracy.`);
+      }
     } finally {
       setIsUploading(false);
     }
   };
 
   return (
-    <form 
+    <form
       onSubmit={handleSubmit}
       className="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:p-8 transition-all duration-300 hover:shadow-xl"
     >
@@ -104,7 +108,7 @@ const AadhaarUploadForm: React.FC<AadhaarUploadFormProps> = ({ onOcrComplete }) 
             </p>
           )}
         </div>
-        
+
         <div className="space-y-3 sm:space-y-4">
           <h2 className="text-base sm:text-lg font-semibold text-gray-800 flex items-center">
             <span className="flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-indigo-100 text-indigo-600 mr-2 text-xs sm:text-sm">2</span>
@@ -123,29 +127,29 @@ const AadhaarUploadForm: React.FC<AadhaarUploadFormProps> = ({ onOcrComplete }) 
           )}
         </div>
       </div>
-      
+
       {uploadStatus === 'error' && (
         <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg">
           <div className="flex items-center text-red-600 text-sm sm:text-base">
             <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
             </svg>
             {errorMessage || 'Something went wrong. Please try again.'}
           </div>
         </div>
       )}
-      
+
       {uploadStatus === 'success' && (
         <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-lg">
           <div className="flex items-center text-green-600 text-sm sm:text-base">
             <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
             Great! Your images are being processed. We'll extract the information shortly.
           </div>
         </div>
       )}
-      
+
       <div className="mt-6 sm:mt-8 flex justify-center">
         <button
           type="submit"
@@ -154,7 +158,7 @@ const AadhaarUploadForm: React.FC<AadhaarUploadFormProps> = ({ onOcrComplete }) 
             w-full sm:w-auto flex items-center justify-center px-4 sm:px-8 py-2.5 sm:py-3 rounded-lg font-medium text-white text-sm sm:text-base
             transition-all duration-300 transform
             ${isUploading || (!aadhaarImages.front && !aadhaarImages.back)
-              ? 'bg-indigo-300 cursor-not-allowed' 
+              ? 'bg-indigo-300 cursor-not-allowed'
               : 'bg-indigo-600 hover:bg-indigo-700 active:scale-95 hover:shadow-lg'}
           `}
         >
