@@ -16,6 +16,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,16 +60,20 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     }
     
     if (file) {
-      // Validate if it's an image
-      if (!file.type.match('image.*')) {
-        alert('Please upload an image file');
+      // Validate if it's a PNG, JPG, or GIF image
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+      if (!allowedTypes.includes(file.type)) {
+        setError('Please upload a PNG, JPG, or GIF image file');
+        setPreviewUrl(null);
+        onChange(null);
         return;
       }
-      
+      setError(null);
       // Create preview
       setPreviewUrl(URL.createObjectURL(file));
     } else {
       setPreviewUrl(null);
+      setError(null);
     }
     
     onChange(file);
@@ -147,6 +152,9 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
         >
           <X className="h-3 w-3 sm:h-4 sm:w-4 text-gray-500 group-hover:text-red-500" />
         </button>
+      )}
+      {error && (
+        <div className="mt-2 text-xs text-red-500 text-center">{error}</div>
       )}
     </div>
   );

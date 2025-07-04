@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AadhaarUploadForm from '../components/AadhaarUploadForm';
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import ResultField from '../components/ResultField';
 
 interface OcrResult {
@@ -16,12 +16,18 @@ const HomePage: React.FC = () => {
   const [ocrResult, setOcrResult] = useState<OcrResult | null>(null);
   const [isExtracted, setIsExtracted] = useState(false);
 
+
   const handleOcrComplete = (result: OcrResult) => {
     setOcrResult(result);
     setIsExtracted(true);
   };
 
   const handleReset = () => {
+    setOcrResult(null);
+    setIsExtracted(false);
+  };
+
+  const handleGoBack = () => {
     setOcrResult(null);
     setIsExtracted(false);
   };
@@ -38,7 +44,7 @@ const HomePage: React.FC = () => {
               Upload your Aadhaar card to instantly extract information. Fast and secure.
             </p>
           </div>
-          
+
           <div className="mt-6 sm:mt-8 flex flex-wrap gap-2 sm:gap-4 justify-center text-xs sm:text-sm">
             <div className="flex items-center bg-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm">
               <span className="text-indigo-600">✨</span>
@@ -54,7 +60,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
         </header>
-        
+
         <main className="max-w-4xl mx-auto">
           {!isExtracted ? (
             <div className="transition-all duration-300">
@@ -63,14 +69,25 @@ const HomePage: React.FC = () => {
           ) : (
             <div className="bg-white rounded-xl shadow-lg p-4 sm:p-8 transition-all duration-300">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-                <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-800">Extracted Information</h2>
-                <button
-                  onClick={handleReset}
-                  className="flex items-center justify-center gap-2 px-2 lg:px-4 lg:py-2 py-1.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-all duration-300 shadow-sm hover:shadow-md active:scale-95 w-full sm:w-auto"
-                >
-                  <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
-                  Upload New Card
-                </button>
+                <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-800 text-center sm:text-left">Extracted Information</h2>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleGoBack}
+
+                    className="flex items-center justify-center gap-2 px-2 lg:px-4 lg:py-2 py-1.5 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-all duration-300 shadow-sm hover:shadow-md active:scale-95 w-full sm:w-auto"
+                  >
+                    <X className="h-4 w-4 sm:h-5 sm:w-5" />
+                    Clear
+                  </button>
+                  <button
+                    onClick={handleReset}
+                    className="flex items-center justify-center gap-2 px-2 lg:px-4 lg:py-2 py-1.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-all duration-300 shadow-sm hover:shadow-md active:scale-95 w-full sm:w-auto"
+                  >
+                    <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
+                    Upload New
+                  </button>
+
+                </div>
               </div>
               <div className="space-y-2">
                 <ResultField label="Aadhaar Number" value={ocrResult?.aadhaarNumber || ''} />
@@ -83,7 +100,7 @@ const HomePage: React.FC = () => {
             </div>
           )}
         </main>
-        
+
         <footer className="mt-12 sm:mt-20 text-center space-y-4">
           <div className="max-w-2xl mx-auto p-4 sm:p-6 bg-white rounded-xl shadow-sm">
             <p className="text-sm sm:text-base text-slate-600">

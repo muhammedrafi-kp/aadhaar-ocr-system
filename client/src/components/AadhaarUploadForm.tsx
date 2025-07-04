@@ -78,7 +78,7 @@ const AadhaarUploadForm: React.FC<AadhaarUploadFormProps> = ({ onOcrComplete }) 
       if (error.response.data.status === 404 || error.response.data.status === 500) {
         setErrorMessage('Something went wrong. Please try again.');
       } else {
-        setErrorMessage(`${error.response.data.message}, Please upload a clearer front and back image for better accuracy.`);
+        setErrorMessage(`${error.response.data.message}`);
       }
     } finally {
       setIsUploading(false);

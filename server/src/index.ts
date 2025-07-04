@@ -25,8 +25,6 @@ app.get("/api/v1/test", (req, res) => {
     res.json({message: "Hello World"});
 });
 
-console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-
 app.listen(process.env.PORT,()=>{
     console.log(`Server is running on port ${process.env.PORT}`);
 });
