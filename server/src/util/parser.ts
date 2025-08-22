@@ -26,9 +26,9 @@ export function parseAadhaarData(text: string): AadhaarData {
     /unique identifica|identification authority/i,
     /QR Code/i, /VID/i, /AADHAAR/i,
     /^address[:：]?\s*$/i, /^पता[:：]?\s*$/i,
-    /\d{4}\s?\d{4}\s?\d{4}/,                    // Aadhaar number
-    /\d{2}[\/\-]\d{2}[\/\-]\d{4}/,              // DOB
-    /male|female|other|dob|जन्म|1947|1800|customer|toll\s*free/i // Gender & misc
+    /\d{4}\s?\d{4}\s?\d{4}/,                   
+    /\d{2}[\/\-]\d{2}[\/\-]\d{4}/,             
+    /male|female|other|dob|जन्म|1947|1800|customer|toll\s*free/i 
   ];
   const isNoise = (s: string) => NOISE.some(r => r.test(s)); // Check if line is noise
 

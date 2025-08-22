@@ -37,11 +37,11 @@ OCR is handled using **Google Cloud Vision**, with custom parsing logic to extra
 - ⚠️ Handles noise & OCR errors gracefully
 
 ---
-
+<!-- 
 ## 🌐 Live Demo
 
 > Coming Soon! ✨  
-> [Optional: Link to deployed frontend (e.g., Vercel, Netlify) or backend (e.g., Render, GCP App Engine)]
+> [Optional: Link to deployed frontend (e.g., Vercel, Netlify) or backend (e.g., Render, GCP App Engine)] -->
 
 ---
 
