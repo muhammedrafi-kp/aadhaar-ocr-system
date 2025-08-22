@@ -130,4 +130,4 @@ npm run dev
 If you found this project helpful or interesting, please consider giving it a ⭐ on GitHub  😊
 
 
-[![GitHub Stars](https://img.shields.io/github/stars/muhammedrafi-kp/aadhaar-ocr-system.github?style=social)](https://github.com/muhammedrafi-kp/aadhaar-ocr-system.github/stargazers)
+[![GitHub Stars](https://img.shields.io/github/stars/muhammedrafi-kp/aadhaar-ocr-system?style=social)](https://github.com/muhammedrafi-kp/aadhaar-ocr-system/stargazers)
