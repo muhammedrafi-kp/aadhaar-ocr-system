@@ -106,8 +106,8 @@ npm run dev
 
 - Parsed details are sent back and rendered in the UI.
 
-## 🖥️
-### 🎨 Frontend Setup
+## 📄 Response
+
 ```json
 {
   "aadhaarNumber": "xxxxxxxxxxxx",
